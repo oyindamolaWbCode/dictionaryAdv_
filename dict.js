@@ -8,12 +8,28 @@ let phonetic = document.querySelector('.phonetic')
 let lists = document.querySelector('.lists')
 let Synonyms = document.querySelector('#Synonyms')
 let verbList = document.querySelector('#verbList')
+let sound = document.querySelector('.fa-play')
+let line = document.querySelector('.line')
+let wordHeadings = document.querySelectorAll('h2')
 
+
+let toggler = false;
 toggle.addEventListener('click', () => {
-    body.style.backgroundColor = 'white';
-    li.forEach(item => {
+    toggler = !toggler
+    if(toggle){
+        toggle.classList.replace('fa-toggle-on', 'fa-toggle-off')
+      body.style.backgroundColor = '#141414';  
+    }else{
+        toggle.classList.replace('fa-toggle-off', 'fa-toggle-on')
+        body.style.backgroundColor = 'white'; 
+          li.forEach(item => {
         item.style.color = 'black';
+        line.style.backgroundColor = 'black'
+        wordHeadings.style.color ='black'
     });
+    }
+    
+  
 }) 
 
 // let input = searchInput.value;
@@ -25,8 +41,6 @@ toggle.addEventListener('click', () => {
 //     .then(response => response.json())
 //     .then(data => data)
 // }
-
-
 
 search.addEventListener('click', () =>{
     let input = searchInput.value;
@@ -73,12 +87,28 @@ let result = ''
         console.log(error)
     }
 }    
-
-
 generateWord()
 
-}
+}// else{
 
+// }
+})
+
+//sound play
+let show = false;
+
+sound.addEventListener('click', () =>{
+    generateWord()
+    const wordPlay = result[0].phonetics[0].audio
+    sound.src = wordPlay;
+
+  show = !show
+
+    if(show){
+        sound.classList.replace('fas fa-play', "fa-solid fa-pause")
+    }else{
+        sound.classList.replace('fa-solid fa-pause', "fas fa-play")
+    }
 })
 
 
