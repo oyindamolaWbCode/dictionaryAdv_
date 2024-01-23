@@ -1,0 +1,116 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #141414;
+}
+
+.dictionary-container{
+    padding: 50px 250px;
+}
+
+.navs{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.fa-book{
+    color:rgb(90, 79, 79);
+}
+
+.fa-toggle-on{
+    color:#A04DE6;
+    margin-right: 10px;
+}
+
+.fa-moon{
+    color:rgb(90, 79, 79);
+}
+
+.input{
+    padding: 20px 80px;
+}
+
+input[type='text']{
+    width: 98%;
+    height: 40px;
+    padding:0px 10px ;
+    border-radius: 5px;
+    font-size: 17px;
+    background-color: #E9E9E9;
+}
+
+.fa-search{
+    color:rgb(122, 116, 116);
+    position: absolute;
+    right:340px;
+    margin-top: -26px;
+}
+
+.word{
+    padding: 20px 80px;
+    display: flex;
+    justify-content: space-between;
+}
+
+h1{
+    color: white;
+}
+
+.fa-play{
+    /* background-color: rgba(187, 117, 244, 0.547);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    align-items: center;
+    text-align: center;
+    margin: 10px auto; */
+    color: #A04DE6;
+}
+
+.word-details{
+    padding: 20px 80px;
+    color:white;
+    display: flex;
+}
+
+h2{
+    margin-right: 20px;
+}
+
+.line{
+    border-bottom: 2px solid #E9E9E9;
+    width: 95%;
+    margin-top: -20px;
+}
+
+.details{
+    padding: 20px 80px;
+    color:rgb(187, 182, 182);
+    
+}
+
+.Meaning{
+    font-size: 18px;
+}
+
+.phonetic{
+    font-size: 18px;
+    margin-top: 10px;
+    color: rgb(114, 102, 247);
+    font-style: italic;
+}
+
+
+
+ul{
+    margin-top: 10px;
+}
+
+li{
+    margin-bottom: 15px;
+    color: white;
+}
