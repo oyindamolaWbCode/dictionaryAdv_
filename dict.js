@@ -1,36 +1,60 @@
-let toggle = document.querySelector('#toggle'); 
-let body = document.querySelector('.body');
-let li = document.querySelectorAll('li');
-let searchInput = document.querySelector('input')
-let search = document.querySelector('.fa-search')
-let text = document.getElementById('text');
-let phonetic = document.querySelector('.phonetic')
-let lists = document.querySelector('.lists')
-let Synonyms = document.querySelector('#Synonyms')
-let verbList = document.querySelector('#verbList')
-let sound = document.querySelector('.fa-play')
-let line = document.querySelector('.line')
-let wordHeadings = document.querySelectorAll('h2')
-
+let toggle = document.querySelector("#toggle");
+let body = document.querySelector(".body");
+let li = document.querySelectorAll("li");
+let line = document.querySelectorAll(".line");
+let searchInput = document.querySelector("input");
+let search = document.querySelector(".fa-search");
+let text = document.getElementById("text");
+let phonetic = document.querySelector(".phonetic");
+let lists = document.querySelector(".lists");
+let Synonyms = document.querySelector("#Synonyms");
+let verbList = document.querySelector("#verbList");
+let sound = document.querySelector(".fa-play");
+let wordHeadings = document.querySelectorAll("h2");
 
 let toggler = false;
-toggle.addEventListener('click', () => {
-    toggler = !toggler
-    if(toggle){
-        toggle.classList.replace('fa-toggle-on', 'fa-toggle-off')
-      body.style.backgroundColor = '#141414';  
-    }else{
-        toggle.classList.replace('fa-toggle-off', 'fa-toggle-on')
-        body.style.backgroundColor = 'white'; 
-          li.forEach(item => {
-        item.style.color = 'black';
-        line.style.backgroundColor = 'black'
-        wordHeadings.style.color ='black'
+
+toggle.addEventListener("click", () => {
+  toggler = !toggler;
+
+  if (toggler) {
+    toggle.classList.replace("fa-toggle-on", "fa-toggle-off");
+
+    body.style.backgroundColor = "#141414";
+
+    li.forEach((item) => {
+      item.style.color = "white";
     });
-    }
-    
-  
-}) 
+
+    line.forEach((linny) => {
+      linny.style.borderBottomWidth = "2px";
+      linny.style.borderBottomStyle = "solid";
+      linny.style.borderBottomColor = "white";
+    });
+
+    wordHeadings.forEach((headings) => {
+      headings.style.color = "white";
+    });
+  } else {
+    toggle.classList.replace("fa-toggle-off", "fa-toggle-on");
+
+    body.style.backgroundColor = "white";
+
+    li.forEach((item) => {
+      item.style.color = "black";
+    });
+
+    line.forEach((linny) => {
+      linny.style.borderBottomWidth = "2px";
+      linny.style.borderBottomStyle = "solid";
+      linny.style.borderBottomColor = "black";
+    });
+
+    wordHeadings.forEach((headings) => {
+      headings.style.color = "black";
+    });
+  }
+});
 
 // let input = searchInput.value;
 
@@ -42,74 +66,76 @@ toggle.addEventListener('click', () => {
 //     .then(data => data)
 // }
 
-search.addEventListener('click', () =>{
-    let input = searchInput.value;
+search.addEventListener("click", () => {
+  let input = searchInput.value;
 
-    if(!input){
-    alert('Input Required')
-   
+  if (!input) {
+    alert("Input Required");
+  } else {
+    let dict_url = `https://api.dictionaryapi.dev/api/v2/entries/en/${input}`;
 
-}else{
-
-    let dict_url = `https://api.dictionaryapi.dev/api/v2/entries/en/${input}`
-
-const generateWord = async () =>{
-let result = ''
-    try{
-        const data = await fetch(dict_url)
+    const generateWord = async () => {
+      let result = "";
+      try {
+        const data = await fetch(dict_url);
         result = await data.json();
-        console.log(result)
+        console.log(result);
 
-        if(result){
-            text.textContent = result[0].word;
-             phonetic.textContent = result[0].phonetics[1].text;
+        if (result) {
+          text.textContent = result[0].word;
+          phonetic.textContent = result[0].phonetics[1].text;
 
-            const meaningList = result[0].meanings[0].definitions.map((meaning, index) => {
-                return `
+          const meaningList = result[0].meanings[0].definitions
+            .map((meaning, index) => {
+              return `
                 <li>${meaning.definition}
-                `
-            }).join(' ')
+                `;
+            })
+            .join(" ");
 
-            lists.innerHTML = meaningList;
-        }
+          lists.innerHTML = meaningList;
 
-        Synonyms.innerHTML = `Synonyms: ${result[0].meanings[0].synonyms.join(',')}`
+          Synonyms.innerHTML = `Synonyms: ${result[0].meanings[0].synonyms.join(
+            ","
+          )}`;
 
-        const VerbList = result[0].meanings[1].definitions.map((meaning, index) => {
-            return `
+          const VerbList = result[0].meanings[1].definitions
+            .map((meaning, index) => {
+              return `
             <li>${meaning.definition}
-            `
-        }).join(' ')
+            `;
+            })
+            .join(" ");
 
-        verbList.innerHTML = VerbList;
-        
-    }catch(error){
-        console.log(error)
-    }
-}    
-generateWord()
+          verbList.innerHTML = VerbList;
 
-}// else{
+          // const wordPlay = result[0].phonetics.audio;
+       
+          const hasPlay = result[0].phonetics.find((sound)=> sound.audio !== '')
 
-// }
-})
+          if (hasPlay) {
+            let aud = document.getElementById("aud");
+            aud.src = hasPlay.audio;
 
-//sound play
-let show = false;
+            sound.addEventListener("click", () => {
+              aud.play();
+            });
+          } else {
+            aud.src = ''
+          }
 
-sound.addEventListener('click', () =>{
-    generateWord()
-    const wordPlay = result[0].phonetics[0].audio
-    sound.src = wordPlay;
-
-  show = !show
-
-    if(show){
-        sound.classList.replace('fas fa-play', "fa-solid fa-pause")
-    }else{
-        sound.classList.replace('fa-solid fa-pause', "fas fa-play")
-    }
-})
-
+        } else {
+          text.textContent = "Word not found";
+          phonetic.textContent = "";
+          verbList.innerHTML = "";
+          lists.innerHTML = "";
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    generateWord();
+  }
+});
 
 
